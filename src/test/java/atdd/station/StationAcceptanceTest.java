@@ -21,19 +21,54 @@ public class StationAcceptanceTest {
     @Autowired
     private WebTestClient webTestClient;
 
+    /**
+     * 지하철 정보
+     * {
+     *     "id":1,
+     *     "name":"강남역"
+     * }
+     */
+
+    /**
+     * Scenario: 지하철역 등록
+     * When 관리자는 "강남역" 지하철역 등록을 요청한다.
+     * Then "강남역" 지하철역이 등록된다.
+     */
     @Test
     public void test() {
         String stationName = "강남역";
         String inputJson = "{\"name\":\""+stationName+"\"}";
 
+        System.out.println("111111");
+
         webTestClient.post().uri("/stations")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(inputJson), String.class)
                 .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON);
+    }
+
+    /**
+     * Scenario: 지하철역 목록 조회
+     * Given "강남역" 지하철역이 등록되어 있다.
+     * When 사용자는 지하철역 목록조회를 요청한다.
+     * Then 사용자는 "강남역" 지하철역의 정보를 응답받는다.
+     */
+    @Test
+    public void 지하철역_목록_조회() {
+        //Given
+        test();
+
+        System.out.println("@222222");
+
+        //When
+        webTestClient.get().uri("/stations/강남역")
+                .exchange()
                 .expectStatus().isOk()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
-                .expectHeader().exists("Location")
-                .expectBody().jsonPath("$.name").isEqualTo(stationName);
+                .expectBody().jsonPath("$.name").isEqualTo("강남역");
     }
+
 
 }
