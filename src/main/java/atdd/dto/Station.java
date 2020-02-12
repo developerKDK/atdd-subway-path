@@ -1,17 +1,15 @@
 package atdd.dto;
 
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="station")
-@Data
 @Getter
-@Setter
+@ToString
+@NoArgsConstructor
 public class Station {
 
     @Id
@@ -20,5 +18,16 @@ public class Station {
     private Long id;
     @Column(name = "name", length = 10, nullable = false)
     private String name;
+
+    @Builder
+    public Station(String name) {
+        this.name = name;
+    }
+
+    public Station toEntity() {
+        return Station.builder()
+                .name(this.name)
+                .build();
+    }
 
 }
