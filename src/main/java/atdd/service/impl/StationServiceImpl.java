@@ -6,13 +6,14 @@ import atdd.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class StationServiceImpl implements StationService {
 
-    @Autowired
+    @Resource
     private StationRepository stationRepository;
 
     @Override
@@ -31,10 +32,12 @@ public class StationServiceImpl implements StationService {
     }
 
     @Override
-    public void deleteStation(String stationName) {
+    public Long deleteStation(String stationName) {
 
         Station station =  stationRepository.findByName(stationName);
         stationRepository.deleteById(station.getId());
+
+        return station.getId();
 
     }
 }

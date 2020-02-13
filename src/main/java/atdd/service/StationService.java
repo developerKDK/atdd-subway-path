@@ -12,6 +12,6 @@ public interface StationService {
 
     Station detailStation(String stationName);
 
-    void deleteStation(String stationName);
+    Long deleteStation(String stationName);
 
 }

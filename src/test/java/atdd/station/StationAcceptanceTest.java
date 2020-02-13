@@ -14,9 +14,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -133,70 +131,8 @@ public class StationAcceptanceTest {
                 .expectHeader().exists("Location")
                 .expectBody()
                 .jsonPath("$.name").isEqualTo(station.getName());
-    }
-
-
-    /**
-     * Feature: 지하철 노선 관리
-     *
-     * Scenario: 지하철 노선 등록
-     * When 관리자는 "2호선" 지하철 노선 등록을 요청한다.
-     * Then "2호선" 지하철 노선이 등록 되었다.
-     */
-    @Test
-    public void testCreateSubway() {
-
-        String startTime = "05:00";
-        String endTime = "23:50";
-
-        Station station = Station.builder()
-                .name("삼성역")
-                .build();
-
-        List<Station> stations = new ArrayList<>();
-        stations.add(station);
-
-        Line line = Line.builder()
-                .name("2호선")
-                .startTime(startTime)
-                .endTime(endTime)
-                .intervalTime(10)
-                .stations(stations)
-                .build();
 
     }
 
-    /**
-     * Scenario: 지하철 노선 목록 조회
-     * Given "2호선" 지하철 노선이 등록되어 있다.
-     * When 사용자는 지하철 노선의 목록 조회를 요청한다.
-     * Then 지하철 노선의 목록을 응답받는다.
-     */
-    @Test
-    public void testGetSubway() {
-
-    }
-
-    /**
-     * Scenario: 지하철 노선 정보 조회
-     * Given "2호선" 지하철 노선이 등록되어 있다.
-     * When 사용자는 "2호선" 지하철 노선의 정보 조회를 요청한다.
-     * Then "2호선" 지하철 노선의 정보를 응답받는다.
-     */
-    @Test
-    public void testGetSubwayInfo() {
-
-    }
-
-    /**
-     * Scenario: 지하철 노선 삭제
-     * Given "2호선" 지하철 노선이 등록되어 있다.
-     * When 관리자는 "2호선" 지하철 노선 삭제를 요청한다.
-     * Then "2호선" 지하철 노선이 삭제되었다.
-     */
-    @Test
-    public void testDeleteSubway() {
-
-    }
 }
 

@@ -1,5 +1,6 @@
 package atdd.station;
 
+import atdd.dto.Line;
 import atdd.dto.Station;
 import atdd.service.StationService;
 import org.slf4j.Logger;
@@ -18,7 +19,7 @@ import java.util.Map;
 @RequestMapping(value = "/stations", produces = "application/json")
 public class StationController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StationController.class);
+    private static final Logger logger = LoggerFactory.getLogger(StationController.class);
 
     @Resource
     private StationService stationService;
@@ -37,8 +38,6 @@ public class StationController {
     @GetMapping("")
     public ResponseEntity<List<Station>> getStation() {
 
-        stationService.getStation();
-
         return ResponseEntity.ok(stationService.getStation());
     }
 
@@ -50,11 +49,10 @@ public class StationController {
     }
 
     @DeleteMapping("/{stationName}")
-    public ResponseEntity<String> deleteStation(@PathVariable String stationName) {
+    public ResponseEntity<Long> deleteStation(@PathVariable String stationName) {
 
-        stationService.deleteStation(stationName);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(stationService.deleteStation(stationName));
 
     }
+
 }
